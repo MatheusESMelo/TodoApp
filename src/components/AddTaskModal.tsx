@@ -27,19 +27,21 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
   const [dueDate, setDueDate] = useState<Date | null>(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
+  // Function to reset all input fields
   const resetFields = () => {
     setTaskName("");
     setDueDate(null);
     setShowDatePicker(false);
   };
 
+  // Function to handle adding a new task
   const handleAddTask = () => {
     if (taskName.trim()) {
       onAdd(taskName.trim(), dueDate ? dueDate.toISOString() : null);
       resetFields();
       onClose();
     } else {
-      alert("Please enter a task name.");
+      alert("Please enter a task name."); // Validation for empty task name
     }
   };
 
