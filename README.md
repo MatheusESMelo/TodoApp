@@ -90,15 +90,13 @@ npm run ios
 Launch the app and log in using the mock credentials.
 
 ```json
-MOCK_USER = {
-  email: "admin@adm.com",
-  password: "adm123",
+{
+  "email": "admin@adm.com",
+  "password": "adm123"
 }
 ```
 
-<div class="warning">
-    In the app there is a button called "Bypass Login" below the login button (this button is not shown in the video because it is commented, but in the main branch it will be uncommented), it was created just to facilitate login to the development environment and tests, this button calls the login function already passing the email and password parameters, so the developer or tester does not need to spend time always writing the login and password to enter the app.
-</div>
+- Attention: In the app there is a button called "Bypass Login" below the login button (this button is not shown in the video because it is commented, but in the main branch it will be uncommented), it was created just to facilitate login to the development environment and tests, this button calls the login function already passing the email and password parameters, so the developer or tester does not need to spend time always writing the login and password to enter the app.
 
 Navigate between the Todo List and Completed Tasks screens using the bottom tab bar.
 
