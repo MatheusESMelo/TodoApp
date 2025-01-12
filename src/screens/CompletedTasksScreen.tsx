@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet, SafeAreaView } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TodoItem from "../components/TodoItem";
@@ -57,26 +57,32 @@ const CompletedTasksScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={completedTasks}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TodoItem
-            taskName={item.name}
-            isCompleted={item.isCompleted}
-            onToggle={() => {}}
-            onDelete={() => deleteTask(item.id)}
-            disableEdit={true}
-            onEdit={() => {}}
-          />
-        )}
-      />
-    </View>
+    <SafeAreaView style={styles.containerSafeAreaView}>
+      <View style={styles.container}>
+        <FlatList
+          data={completedTasks}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <TodoItem
+              taskName={item.name}
+              isCompleted={item.isCompleted}
+              onToggle={() => {}}
+              onDelete={() => deleteTask(item.id)}
+              disableEdit={true}
+              onEdit={() => {}}
+            />
+          )}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  containerSafeAreaView: {
+    flex: 1,
+    paddingTop: 24,
+  },
   container: {
     flex: 1,
     padding: 10,

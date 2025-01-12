@@ -7,6 +7,7 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AddTaskModal from "../components/AddTaskModal";
@@ -140,78 +141,84 @@ const TodoListScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search tasks..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
-      <View style={styles.sortOptions}>
-        <TouchableOpacity
-          style={[
-            styles.sortButton,
-            sortOption === "name" && styles.selectedSort,
-          ]}
-          onPress={() => setSortOption("name")}
-        >
-          <Text>Sort by Name</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.sortButton,
-            sortOption === "status" && styles.selectedSort,
-          ]}
-          onPress={() => setSortOption("status")}
-        >
-          <Text>Sort by Status</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.sortButton,
-            sortOption === "date" && styles.selectedSort,
-          ]}
-          onPress={() => setSortOption("date")}
-        >
-          <Text>Sort by Date</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.sortButton,
-            sortOption === "dueDate" && styles.selectedSort,
-          ]}
-          onPress={() => setSortOption("dueDate")}
-        >
-          <Text>Sort by dueDate</Text>
-        </TouchableOpacity>
+    <SafeAreaView style={styles.containerSafeAreaView}>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search tasks..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+        <View style={styles.sortOptions}>
+          <TouchableOpacity
+            style={[
+              styles.sortButton,
+              sortOption === "name" && styles.selectedSort,
+            ]}
+            onPress={() => setSortOption("name")}
+          >
+            <Text>Sort by Name</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.sortButton,
+              sortOption === "status" && styles.selectedSort,
+            ]}
+            onPress={() => setSortOption("status")}
+          >
+            <Text>Sort by Status</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.sortButton,
+              sortOption === "date" && styles.selectedSort,
+            ]}
+            onPress={() => setSortOption("date")}
+          >
+            <Text>Sort by Date</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.sortButton,
+              sortOption === "dueDate" && styles.selectedSort,
+            ]}
+            onPress={() => setSortOption("dueDate")}
+          >
+            <Text>Sort by dueDate</Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={filteredTasks}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <TodoItem
+              taskName={item.name}
+              isCompleted={item.isCompleted}
+              dueDate={item.dueDate}
+              onToggle={() => toggleTaskStatus(item.id)}
+              onDelete={() => deleteTask(item.id)}
+              onEdit={(newName, newDueDate) =>
+                editTask(item.id, newName, newDueDate)
+              }
+            />
+          )}
+        />
+        <Button title="Add Task" onPress={() => setModalVisible(true)} />
+        <AddTaskModal
+          visible={isModalVisible}
+          onAdd={(taskName, dueDate) => addTask(taskName, dueDate)}
+          onClose={() => setModalVisible(false)}
+        />
       </View>
-      <FlatList
-        data={filteredTasks}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TodoItem
-            taskName={item.name}
-            isCompleted={item.isCompleted}
-            dueDate={item.dueDate}
-            onToggle={() => toggleTaskStatus(item.id)}
-            onDelete={() => deleteTask(item.id)}
-            onEdit={(newName, newDueDate) =>
-              editTask(item.id, newName, newDueDate)
-            }
-          />
-        )}
-      />
-      <Button title="Add Task" onPress={() => setModalVisible(true)} />
-      <AddTaskModal
-        visible={isModalVisible}
-        onAdd={(taskName, dueDate) => addTask(taskName, dueDate)}
-        onClose={() => setModalVisible(false)}
-      />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  containerSafeAreaView: {
+    flex: 1,
+    paddingTop: 24,
+  },
   container: {
     flex: 1,
     padding: 10,
