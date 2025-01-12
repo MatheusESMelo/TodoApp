@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, StyleSheet, SafeAreaView } from "react-native";
+import { View, FlatList, StyleSheet, SafeAreaView, Text } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TodoItem from "../components/TodoItem";
@@ -10,13 +10,15 @@ interface Task {
   isCompleted: boolean;
 }
 
+// Key used for storing and retrieving tasks in AsyncStorage
 const STORAGE_KEY = "@todo_list_tasks";
 
 const CompletedTasksScreen: React.FC = () => {
   const [completedTasks, setCompletedTasks] = useState<Task[]>([]);
+  // Hook to determine if the screen is currently focused
   const isFocused = useIsFocused();
 
-  // Load tasks from AsyncStorage
+  // useEffect to load completed tasks from AsyncStorage whenever the screen is focused
   useEffect(() => {
     const loadCompletedTasks = async () => {
       try {
@@ -32,13 +34,15 @@ const CompletedTasksScreen: React.FC = () => {
     };
 
     if (isFocused) {
-      loadCompletedTasks();
+      loadCompletedTasks(); // Load tasks when screen is focused
     }
   }, [isFocused]);
 
+  // Function to delete a task from the list and update AsyncStorage
   const deleteTask = (id: string) => {
     setCompletedTasks((prev) => prev.filter((task) => task.id !== id));
 
+    // Async function to update the stored tasks in AsyncStorage
     const updateStorage = async () => {
       try {
         const storedTasks = await AsyncStorage.getItem(STORAGE_KEY);
@@ -53,12 +57,13 @@ const CompletedTasksScreen: React.FC = () => {
       }
     };
 
-    updateStorage();
+    updateStorage(); // Call the async function to update storage
   };
 
   return (
     <SafeAreaView style={styles.containerSafeAreaView}>
       <View style={styles.container}>
+        <Text style={styles.textTitle}>Completed Tasks</Text>
         <FlatList
           data={completedTasks}
           keyExtractor={(item) => item.id}
@@ -70,6 +75,7 @@ const CompletedTasksScreen: React.FC = () => {
               onDelete={() => deleteTask(item.id)}
               disableEdit={true}
               onEdit={() => {}}
+              dueDate={item.dueDate}
             />
           )}
         />
@@ -86,6 +92,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+  textTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+    zIndex: 9,
   },
 });
 
