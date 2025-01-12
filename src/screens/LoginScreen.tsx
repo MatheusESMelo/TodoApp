@@ -10,11 +10,14 @@ import {
 import { useAuth } from "../context/AuthContext";
 
 const LoginScreen = ({ navigation }: any) => {
+  // Access the login function from the authentication context
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Function to handle the login process
   const handleLogin = () => {
+    // Check if the login credentials are valid
     if (login(email, password)) {
       Alert.alert("Success", "Login successful!");
       navigation.replace("Main");
@@ -23,6 +26,7 @@ const LoginScreen = ({ navigation }: any) => {
     }
   };
 
+  // Function to bypass login with predefined credentials
   const handleBypassLogin = () => {
     login("admin@adm.com", "adm123");
     Alert.alert("Success", "Login successful!");
@@ -51,7 +55,7 @@ const LoginScreen = ({ navigation }: any) => {
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleBypassLogin}>
+      <TouchableOpacity style={styles.buttonBypass} onPress={handleBypassLogin}>
         <Text style={styles.buttonText}>Bypass Login</Text>
       </TouchableOpacity>
     </View>
@@ -80,6 +84,14 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#4CAF50",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    width: "80%",
+  },
+  buttonBypass: {
+    backgroundColor: "grey",
+    marginTop: 8,
     padding: 10,
     borderRadius: 5,
     alignItems: "center",
