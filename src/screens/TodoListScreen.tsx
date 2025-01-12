@@ -22,6 +22,7 @@ interface Task {
   dueDate: string | null;
 }
 
+// Key for storing tasks in AsyncStorage
 const STORAGE_KEY = "@todo_list_tasks";
 
 const TodoListScreen: React.FC = () => {
@@ -30,8 +31,10 @@ const TodoListScreen: React.FC = () => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortOption, setSortOption] = useState<string>("name");
+  // Hook to check if the screen is currently focused
   const isFocused = useIsFocused();
 
+  // useEffect to load tasks from AsyncStorage when the screen is focused
   useEffect(() => {
     const loadTasks = async () => {
       try {
@@ -51,6 +54,7 @@ const TodoListScreen: React.FC = () => {
     }
   }, [isFocused]);
 
+  // useEffect to save tasks to AsyncStorage whenever tasks change
   useEffect(() => {
     const saveTasks = async () => {
       try {
@@ -63,6 +67,7 @@ const TodoListScreen: React.FC = () => {
     saveTasks();
   }, [tasks]);
 
+  // Filter and sort tasks based on search query and selected sort option
   useEffect(() => {
     let filtered = tasks;
 
@@ -102,6 +107,7 @@ const TodoListScreen: React.FC = () => {
     setFilteredTasks(filtered);
   }, [tasks, searchQuery, sortOption]);
 
+  // Function to add a new task
   const addTask = (taskName: string, dueDate: string | null) => {
     const newTask: Task = {
       id: Date.now().toString(),
@@ -114,6 +120,7 @@ const TodoListScreen: React.FC = () => {
     setModalVisible(false);
   };
 
+  // Function to edit an existing task
   const editTask = (
     taskId: string,
     newTaskName: string,
@@ -128,6 +135,7 @@ const TodoListScreen: React.FC = () => {
     );
   };
 
+  // Function to toggle the completion status of a task
   const toggleTaskStatus = (id: string) => {
     setTasks((prev) =>
       prev.map((task) =>
@@ -136,6 +144,7 @@ const TodoListScreen: React.FC = () => {
     );
   };
 
+  // Function to delete a task
   const deleteTask = (id: string) => {
     setTasks((prev) => prev.filter((task) => task.id !== id));
   };
