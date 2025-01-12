@@ -143,6 +143,7 @@ const TodoListScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.containerSafeAreaView}>
       <View style={styles.container}>
+        <Text style={styles.textTitle}>Filters</Text>
         <TextInput
           style={styles.searchInput}
           placeholder="Search tasks..."
@@ -157,7 +158,7 @@ const TodoListScreen: React.FC = () => {
             ]}
             onPress={() => setSortOption("name")}
           >
-            <Text>Sort by Name</Text>
+            <Text>Name</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -166,7 +167,7 @@ const TodoListScreen: React.FC = () => {
             ]}
             onPress={() => setSortOption("status")}
           >
-            <Text>Sort by Status</Text>
+            <Text>Status</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -175,7 +176,7 @@ const TodoListScreen: React.FC = () => {
             ]}
             onPress={() => setSortOption("date")}
           >
-            <Text>Sort by Date</Text>
+            <Text>Creation</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -184,9 +185,10 @@ const TodoListScreen: React.FC = () => {
             ]}
             onPress={() => setSortOption("dueDate")}
           >
-            <Text>Sort by dueDate</Text>
+            <Text>dueDate</Text>
           </TouchableOpacity>
         </View>
+        <Text style={styles.textTitle}>Tasks</Text>
         <FlatList
           data={filteredTasks}
           keyExtractor={(item) => item.id}
@@ -245,6 +247,11 @@ const styles = StyleSheet.create({
   },
   selectedSort: {
     backgroundColor: "#d3d3d3",
+  },
+  textTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
   },
 });
 

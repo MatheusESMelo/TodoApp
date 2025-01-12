@@ -60,7 +60,13 @@ const TodoItem: React.FC<TodoItemProps> = ({
       <TouchableOpacity style={styles.checkbox} onPress={onToggle}>
         {isCompleted && <View style={styles.checked} />}
       </TouchableOpacity>
-      <View style={{ flexDirection: "column" }}>
+      <View
+        style={{
+          flexDirection: "column",
+          marginRight: "auto",
+          marginLeft: 0,
+        }}
+      >
         <Text style={[styles.taskName, isCompleted && styles.completedTask]}>
           {taskName}
         </Text>
@@ -70,17 +76,18 @@ const TodoItem: React.FC<TodoItemProps> = ({
           </Text>
         )}
       </View>
-      {!disableEdit && (
-        <Button
-          title="Edit"
-          color="#2196F3"
-          onPress={() => setIsEditing(true)}
-        />
-      )}
-      <View style={{ marginLeft: 4 }}>
-        <Button title="Delete" color="#f44336" onPress={onDelete} />
+      <View style={{ flexDirection: "row", alignSelf: "center" }}>
+        {!disableEdit && (
+          <Button
+            title="Edit"
+            color="#2196F3"
+            onPress={() => setIsEditing(true)}
+          />
+        )}
+        <View style={{ marginLeft: 4 }}>
+          <Button title="Delete" color="#f44336" onPress={onDelete} />
+        </View>
       </View>
-
       {/* Modal de edição */}
       <Modal visible={isEditing} animationType="fade" transparent>
         <TouchableOpacity
@@ -140,7 +147,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "space-between",
     padding: 10,
     borderBottomWidth: 1,
@@ -154,6 +161,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center",
     marginRight: 10,
   },
   checked: {
@@ -183,7 +191,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
-    width: "80%",
+    width: "90%",
   },
   modalTitle: {
     fontSize: 18,
@@ -200,6 +208,7 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: 10,
   },
   addButton: {
     flex: 1,
