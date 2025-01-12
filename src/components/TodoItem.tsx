@@ -37,6 +37,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
   );
   const [showDatePicker, setShowDatePicker] = useState(false);
 
+  // Function to save the edited task details
   const handleSave = () => {
     if (newTaskName.trim()) {
       onEdit(newTaskName, dueDateNew);
@@ -46,6 +47,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
     }
   };
 
+  // Function to handle closing the edit modal
   const handleCloseModal = () => {
     Alert.alert("Discard Changes?", "Your changes will not be saved.", [
       { text: "Cancel", style: "cancel" },
@@ -53,6 +55,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
     ]);
   };
 
+  // Style to indicate completed tasks
   const completedStyle = isCompleted ? { backgroundColor: "#e0f7fa" } : {};
 
   return (
@@ -88,7 +91,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
           <Button title="Delete" color="#f44336" onPress={onDelete} />
         </View>
       </View>
-      {/* Modal de edição */}
       <Modal visible={isEditing} animationType="fade" transparent>
         <TouchableOpacity
           style={styles.modalContainer}
@@ -147,7 +149,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    // alignItems: "center",
     justifyContent: "space-between",
     padding: 10,
     borderBottomWidth: 1,
